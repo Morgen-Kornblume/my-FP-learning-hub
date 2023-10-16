@@ -137,10 +137,11 @@ msort seq = merge sbseq1 sbseq2
 
 
 --my function solutions can workout a left nearest solution and a right one (if exist)
+--specially limit on right is 100
 solutions :: [Nat] -> Nat -> [Expr]
 solutions list tar
-  | tar==0 && null sol = rsolutions list (tar+1)
-  | tar/=0 && null sol = merge (lsolutions list (tar-1)) (rsolutions list (tar+1))
+  | tar==0 && null sol = rsolutions list (tar+1) (tar+100)
+  | tar/=0 && null sol = merge (lsolutions list (tar-1)) (rsolutions list (tar+1) (tar+100))
   | otherwise = sol
   where sol=solutions'' list tar
 
@@ -151,9 +152,10 @@ lsolutions list tar
   | otherwise = sol
   where sol=solutions'' list tar
 
-rsolutions :: [Nat] -> Nat -> [Expr]
-rsolutions list tar
-  | null sol = rsolutions list (tar+1)
+rsolutions :: [Nat] -> Nat -> Nat -> [Expr]
+rsolutions list tar lim
+  | tar > lim = []
+  | null sol = rsolutions list (tar+1) lim
   | otherwise = sol
   where sol=solutions'' list tar
 
