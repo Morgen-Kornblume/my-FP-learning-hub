@@ -139,7 +139,7 @@ msort seq = merge sbseq1 sbseq2
 --my function solutions can workout a left nearest solution and a right one (if exist)
 solutions :: [Nat] -> Nat -> [Expr]
 solutions list tar
-  | tar==0 && null sol = rsolutions list tar
+  | tar==0 && null sol = rsolutions list (tar+1)
   | tar/=0 && null sol = merge (lsolutions list (tar-1)) (rsolutions list (tar+1))
   | otherwise = sol
   where sol=solutions'' list tar
