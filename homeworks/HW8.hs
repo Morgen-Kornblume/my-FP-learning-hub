@@ -99,7 +99,7 @@ results [n] = [(Val n, n) | n > 0]
 results ns = [res | (ls,rs) <- split ns, lx <- results ls, ry <- results rs, res <- combine' lx ry]
 
 combine' :: Result -> Result -> [Result]
-combine' (l,x) (r,y) = [(App op l r, apply op x y) | op <- [Add,Sub,Mul,Div], valid op x y]
+combine' (l,x) (r,y) = [(App op l r, apply op x y) | op <- [Add,Sub,Mul,Div,Exp], valid op x y]
 
 solutions'' :: [Nat] -> Nat -> [Expr]
 solutions'' ns n = [e | ns' <- choices ns, (e,m) <- results ns', m == n]
