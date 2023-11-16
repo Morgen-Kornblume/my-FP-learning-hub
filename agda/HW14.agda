@@ -8,18 +8,32 @@ open Eq.≡-Reasoning using (begin_; step-≡; step-≡˘; _≡⟨⟩_; _∎)
 
 -- problem 17.1
 data day : Set where
+  mon : day
+  tue : day
+  wed : day
+  thu : day
+  fri : day
+  sat : day
+  sun : day
   -- fill in your answers here
 
 -- problem 17.2
 nextday : day → day
-nextday = ?
+nextday mon = tue
+nextday tue = wed
+nextday wed = thu
+nextday thu = fri
+nextday fri = sat
+nextday sat = sun
+nextday sun = mon
 
 -- problem 17.3
 ite-arg : ∀ {ℓ ℓ′} {A : Set ℓ} {B : Set ℓ′}
   → (f : A → B)
   → (b : Bool)
-  → (x y : A)
+  → (x y : A) 
     ----------------------
   → f (if b then x else y)
   ≡ (if b then f x else f y)
-ite-arg = ?
+ite-arg f true x y = refl
+ite-arg f false x y = refl
