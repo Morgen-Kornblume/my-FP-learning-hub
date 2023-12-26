@@ -1,3 +1,4 @@
+
 module Boolean where
 
 infix 80 ~_
@@ -42,6 +43,8 @@ if ff then a else b = b
 data _≡_ {ℓ} {A : Set ℓ} (x : A) : A → Set ℓ where
     refl : x ≡ x
 
+{-# BUILTIN EQUALITY _≡_ #-}
+
 ~~tt : ~ ~ tt ≡ tt
 ~~tt = refl
 
@@ -55,4 +58,23 @@ data _≡_ {ℓ} {A : Set ℓ} (x : A) : A → Set ℓ where
 &&-idem : ∀ {b} → b && b ≡ b
 &&-idem{tt} = refl
 &&-idem{ff} = refl
+
+||≡ff₂ : ∀ {b1 b2} → b1 || b2 ≡ ff → b2 ≡ ff
+||≡ff₂{tt} ()
+||≡ff₂{ff}{tt} ()
+||≡ff₂{ff}{ff} p = refl
+
+||≡ff₁ : ∀ {b1 b2} → b1 || b2 ≡ ff → b1 ≡ ff
+||≡ff₁{tt} ()
+||≡ff₁{ff}{tt} ()
+||≡ff₁{ff}{ff} p = refl
+
+||-cong₁ : ∀ {b1 b2 b1′} → b1 ≡ b1′ → b1 || b2 ≡ b1′ || b2
+||-cong₁ refl = refl
+
+||-cong₂ : ∀ {b1 b2 b2′} → b2 ≡ b2′ → b1 || b2 ≡ b1 || b2′
+||-cong₂ p rewrite p = refl
+
+𝔹-contra : ff ≡ tt → ∀{ℓ} {P : Set ℓ} → P
+𝔹-contra ()
 
